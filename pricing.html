@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | UMAR XITERS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASIC STYLES (MATCHING INDEX) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #050505; color: white; text-align: center; overflow-x: hidden; line-height: 1.5;
+            background-image: linear-gradient(rgba(45, 140, 240, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 140, 240, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; background-attachment: fixed;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #2d8cf0; border-radius: 4px; }
+
+        /* --- OVERLAY TRANSITION --- */
+        .transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; z-index: 99999;
+            display: flex; justify-content: center; align-items: center; transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            background-image: linear-gradient(rgba(45, 140, 240, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 140, 240, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .transition-overlay.slide-away { transform: translateY(-100%); }
+        .overlay-text { font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: white; animation: pulseText 1.5s infinite; }
+        .overlay-text span { color: #2d8cf0; }
+        @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 20px rgba(45,140,240,0.8); } }
+
+        /* --- ANIMATIONS --- */
+        .hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* --- NAV --- */
+        nav {
+            display: flex; justify-content: center; align-items: center; padding: 20px 30px; gap: 30px;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 500px;
+        }
+        nav a { color: #ccc; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative; }
+        nav a:hover { color: #fff; text-shadow: 0 0 10px #2d8cf0; }
+        nav a.active { color: #2d8cf0; text-shadow: 0 0 15px #2d8cf0; }
+        nav a.active::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: -5px; left: 0; background: #2d8cf0; box-shadow: 0 0 10px #2d8cf0; }
+
+        /* --- PRICING HERO --- */
+        .hero { margin-top: 150px; margin-bottom: 50px; }
+        .hero h1 { font-size: 50px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .hero h1 .white { color: #fff; }
+        .hero h1 .blue { background: linear-gradient(to right, #2d8cf0, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(45, 140, 240, 0.5); }
+
+        /* --- PRICING CONTAINER --- */
+        .pricing-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px 20px; flex: 1; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; justify-content: center; }
+
+        /* --- PRICING CARDS --- */
+        .card {
+            background: rgba(20, 20, 25, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 40px 30px; transition: all 0.4s; display: flex; flex-direction: column; align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px) scale(1.02); border-color: #2d8cf0; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(45, 140, 240, 0.2); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(45, 140, 240, 0.1), transparent 60%); opacity: 0; transition: 0.4s; }
+        .card:hover::before { opacity: 1; }
+
+        /* Card Content */
+        .plan-name { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 10px; z-index: 1; text-transform: uppercase; }
+        .price { font-size: 42px; font-weight: 800; color: #2d8cf0; margin-bottom: 5px; z-index: 1; text-shadow: 0 0 15px rgba(45, 140, 240, 0.3); }
+        .period { font-size: 14px; color: #888; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; z-index: 1; }
+
+        /* Features List */
+        .features { list-style: none; width: 100%; text-align: left; margin-bottom: 30px; z-index: 1; padding: 0 10px; }
+        .features li { color: #ccc; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+        .features li:last-child { border-bottom: none; }
+        .features li svg { width: 18px; height: 18px; fill: #2d8cf0; margin-right: 12px; filter: drop-shadow(0 0 5px #2d8cf0); }
+
+        /* Button */
+        .buy-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid #2d8cf0; color: #fff;
+            padding: 12px 40px; border-radius: 50px; font-size: 14px; font-weight: 700; text-transform: uppercase;
+            cursor: pointer; transition: all 0.3s ease; text-decoration: none; z-index: 1;
+        }
+        .buy-btn:hover { background: #2d8cf0; color: #000; box-shadow: 0 0 20px rgba(45, 140, 240, 0.6); }
+
+        /* "Popular" Card Special Styles */
+        .card.popular { border: 1px solid rgba(45, 140, 240, 0.5); box-shadow: 0 0 20px rgba(45, 140, 240, 0.1); }
+        .card.popular .badge {
+            position: absolute; top: 15px; right: 15px; background: #2d8cf0; color: #000;
+            font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+        }
+
+        /* --- FOOTER --- */
+        footer { margin-top: auto; padding: 40px 20px; background: linear-gradient(to top, #020202, #08080a); border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+        .footer-text { color: #666; font-size: 13px; max-width: 600px; margin: 0 auto 20px auto; }
+        .copyright { color: #444; font-size: 12px; }
+
+        @media (max-width: 768px) { .hero h1 { font-size: 36px; } nav { width: 95%; padding: 15px; } }
+    </style>
+</head>
+<body>
+
+    <div class="transition-overlay"><div class="overlay-text">Loading <span>...</span></div></div>
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Pricing</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero hidden">
+            <h1>Choose <span class="blue">Your Plan</span></h1>
+        </section>
+
+        <section class="pricing-container">
+            <div class="grid">
+                
+                <div class="card hidden">
+                    <div class="plan-name">Daily</div>
+                    <div class="price">$5.00</div>
+                    <div class="period">For 1 Day</div>
+                    <ul class="features">
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full Access</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Safe & Undetected</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 24/7 Support</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Instant Key</li>
+                    </ul>
+                    <a href="contact.html" class="buy-btn">Buy Now</a>
+                </div>
+
+                <div class="card popular hidden" style="transition-delay: 100ms;">
+                    <div class="badge">Most Popular</div>
+                    <div class="plan-name">Weekly</div>
+                    <div class="price">$20.00</div>
+                    <div class="period">For 7 Days</div>
+                    <ul class="features">
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full Access</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Safe & Undetected</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Priority Support</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Instant Key</li>
+                    </ul>
+                    <a href="contact.html" class="buy-btn">Buy Now</a>
+                </div>
+
+                <div class="card hidden" style="transition-delay: 200ms;">
+                    <div class="plan-name">Monthly</div>
+                    <div class="price">$50.00</div>
+                    <div class="period">For 30 Days</div>
+                    <ul class="features">
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full Access</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Safe & Undetected</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 24/7 Support</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Instant Key</li>
+                    </ul>
+                    <a href="contact.html" class="buy-btn">Buy Now</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="footer-text">Secure transactions. All keys are delivered instantly via email or Discord upon purchase confirmation.</p>
+        <p class="copyright">© 2025 UMAR XITERS. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- 1. OVERLAY TRANSITION LOGIC ---
+        window.addEventListener('load', () => {
+            const overlay = document.querySelector('.transition-overlay');
+            setTimeout(() => { overlay.classList.add('slide-away'); }, 300);
+        });
+
+        // --- 2. LINK HANDLING (Prevents 404s on fake links) ---
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                const isSpecialLink = targetUrl.startsWith('mailto:') || targetUrl.includes('#');
+
+                // If it is a real internal page (like index.html or contact.html)
+                if (targetUrl && !isSpecialLink) {
+                    e.preventDefault();
+                    const overlay = document.querySelector('.transition-overlay');
+                    overlay.classList.remove('slide-away'); // Bring black screen back
+                    setTimeout(() => { window.location.href = targetUrl; }, 800); // Wait, then go
+                }
+            });
+        });
+
+        // --- 3. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('show'); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>

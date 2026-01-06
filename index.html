@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMAR XITERS | Premium Gaming Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #050505; color: white; text-align: center; overflow-x: hidden; line-height: 1.5;
+            background-image: linear-gradient(rgba(45, 140, 240, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 140, 240, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; background-attachment: fixed;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #2d8cf0; border-radius: 4px; }
+
+        /* --- OVERLAY --- */
+        .transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505; z-index: 99999;
+            display: flex; justify-content: center; align-items: center; transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            background-image: linear-gradient(rgba(45, 140, 240, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 140, 240, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .transition-overlay.slide-away { transform: translateY(-100%); }
+        .overlay-text { font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 5px; color: white; animation: pulseText 1.5s infinite; }
+        .overlay-text span { color: #2d8cf0; }
+        @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 20px rgba(45,140,240,0.8); } }
+
+        /* --- ANIMATIONS --- */
+        .hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* --- NAV --- */
+        nav {
+            display: flex; justify-content: center; align-items: center; padding: 20px 30px; gap: 30px;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 500px;
+        }
+        nav a { color: #ccc; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative; }
+        nav a:hover { color: #fff; text-shadow: 0 0 10px #2d8cf0; }
+        nav a.active { color: #2d8cf0; text-shadow: 0 0 15px #2d8cf0; }
+        nav a.active::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: -5px; left: 0; background: #2d8cf0; box-shadow: 0 0 10px #2d8cf0; }
+
+        /* --- HERO --- */
+        .hero { margin-top: 140px; margin-bottom: 80px; padding: 0 20px; position: relative; }
+        .hero h1 { font-size: 60px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; animation: fadeInDown 1s ease-out; }
+        .hero h1 .white { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .hero h1 .blue { background: linear-gradient(to right, #2d8cf0, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(45, 140, 240, 0.5); }
+        
+        .hero-img-box {
+            width: 100%; max-width: 350px; aspect-ratio: 1 / 1; margin: 0 auto;
+            background: rgba(0,0,0,0.5); border: 1px solid #333; display: flex; align-items: center; justify-content: center;
+            border-radius: 20px; position: relative; box-shadow: 0 0 50px rgba(45, 140, 240, 0.1);
+            animation: float 6s ease-in-out infinite; overflow: hidden;
+        }
+        
+        .hero-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-img-box::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #2d8cf0, transparent, #800000, transparent); z-index: -1;
+            border-radius: 22px; background-size: 400%; animation: borderFlow 10s linear infinite;
+        }
+
+        /* --- FEATURES --- */
+        .features-section { margin: 80px 0; padding: 0 20px; }
+        .features-section h2 { font-size: 38px; color: #fff; margin-bottom: 30px; font-weight: 700; }
+        .features-section h2 span { color: #2d8cf0; }
+        .buttons-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        .pill-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(45, 140, 240, 0.3); color: #ddd;
+            padding: 12px 30px; border-radius: 50px; font-size: 14px; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(5px);
+        }
+        .pill-btn:hover { background: rgba(45, 140, 240, 0.2); border-color: #2d8cf0; box-shadow: 0 0 20px rgba(45, 140, 240, 0.4); transform: translateY(-3px); color: white; }
+        .pill-btn.filled { background-color: #2d8cf0; color: black; font-weight: 700; box-shadow: 0 0 15px rgba(45, 140, 240, 0.5); }
+
+        /* --- SERVICES --- */
+        .services-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        .services-title { font-size: 45px; color: white; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 60px; font-weight: 800; position: relative; display: inline-block; }
+        .services-title::after { content: ''; position: absolute; width: 60%; height: 4px; background: #2d8cf0; bottom: -10px; left: 20%; border-radius: 2px; box-shadow: 0 0 15px #2d8cf0; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        
+        /* CARD LINK STYLE */
+        .card {
+            background: rgba(20, 20, 25, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 50px 30px; transition: all 0.4s; display: flex; flex-direction: column; justify-content: center;
+            position: relative; overflow: hidden; text-decoration: none; /* Removed underline for links */
+        }
+        .card:hover { transform: translateY(-10px) scale(1.02); border-color: #2d8cf0; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(45, 140, 240, 0.2); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(45, 140, 240, 0.1), transparent 60%); opacity: 0; transition: 0.4s; }
+        .card:hover::before { opacity: 1; }
+        .card h3 { color: #fff; font-size: 28px; margin-bottom: 15px; font-weight: 700; z-index: 1; }
+        .card .status { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; padding: 8px 15px; border-radius: 20px; display: inline-block; margin: 0 auto 20px auto; z-index: 1; }
+        .status.available { color: #00ff88; background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); box-shadow: 0 0 10px rgba(0, 255, 136, 0.2); }
+        .status.unavailable { color: #ff3333; background: rgba(255, 51, 51, 0.1); border: 1px solid rgba(255, 51, 51, 0.3); box-shadow: 0 0 10px rgba(255, 51, 51, 0.2); }
+        .card p { color: #aaa; font-size: 15px; line-height: 1.7; z-index: 1; }
+
+        /* --- BUY SECTION --- */
+        .buy-section { margin: 100px 0 60px 0; padding: 0 20px; position: relative; }
+        .buy-text { font-size: 28px; font-weight: 700; color: white; margin-bottom: 35px; letter-spacing: 1px; text-shadow: 0 0 20px rgba(45, 140, 240, 0.3); }
+        .premium-btn {
+            position: relative; display: inline-block; padding: 20px 60px; font-size: 20px; font-weight: 800; color: white;
+            text-decoration: none; text-transform: uppercase; letter-spacing: 1px; background: black; border-radius: 50px;
+            z-index: 1; overflow: hidden; transition: 0.3s;
+        }
+        .premium-btn::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(90deg, #2d8cf0, #ff00ff, #2d8cf0); background-size: 400%; z-index: -2;
+            animation: glowing 20s linear infinite; border-radius: 55px;
+        }
+        .premium-btn::after { content: ''; position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px; background: #050505; z-index: -1; border-radius: 50px; transition: 0.3s; }
+        .premium-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(45, 140, 240, 0.6); letter-spacing: 3px; color: #fff; }
+        .premium-btn:hover::after { background: rgba(45, 140, 240, 0.2); }
+
+        /* --- FOOTER --- */
+        footer { margin-top: 50px; padding: 60px 20px; background: linear-gradient(to top, #020202, #08080a); border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+        .footer-top { font-size: 18px; font-weight: bold; margin-bottom: 20px; display: flex; justify-content: center; gap: 30px; }
+        .footer-top span { color: #2d8cf0; text-shadow: 0 0 10px rgba(45, 140, 240, 0.4); }
+        .footer-text { color: #666; font-size: 14px; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.8; }
+        .copyright { color: #444; font-size: 12px; }
+        .copyright a { color: #2d8cf0; text-decoration: none; margin: 0 5px; }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        @keyframes borderFlow { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
+        @keyframes glowing { 0% { background-position: 0 0; } 50% { background-position: 400% 0; } 100% { background-position: 0 0; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .hero h1 { font-size: 40px; } .services-title { font-size: 32px; } nav { width: 95%; padding: 15px; } }
+    </style>
+</head>
+<body>
+
+    <div class="transition-overlay"><div class="overlay-text">Loading <span>...</span></div></div>
+
+    <header>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero hidden">
+            <h1><span class="white">UMAR</span> <span class="blue">XITERS</span></h1>
+            
+            <div class="hero-img-box">
+                <img src="logo.png" alt="UMAR XITERS Logo">
+            </div>
+        </section>
+
+        <section class="features-section hidden">
+            <h2>Why Choose <span>Our Panels?</span></h2>
+            <div class="buttons-row">
+                <button class="pill-btn">Safe & Undetected</button>
+                <button class="pill-btn">Regular Updates</button>
+                <button class="pill-btn filled">Easy to Use</button>
+                <button class="pill-btn">Premium Support</button>
+            </div>
+            <div class="buttons-row"><button class="pill-btn">Affordable Prices</button></div>
+        </section>
+
+        <section class="services-container">
+            <h2 class="services-title hidden">Our Services</h2>
+            <div class="grid">
+                <a href="basic-panel.html" class="card hidden">
+                    <h3>Basic Panel</h3>
+                    <div class="status available">Available</div>
+                    <p>Essential features for safe and legit gameplay.</p>
+                </a>
+                
+                <a href="external-panel.html" class="card hidden" style="transition-delay: 100ms;">
+                    <h3>External Panel</h3>
+                    <div class="status available">Available</div>
+                    <p>Powerful external tools with smooth overlay support.</p>
+                </a>
+                
+                <a href="premium-panel.html" class="card hidden" style="transition-delay: 200ms;">
+                    <h3>Premium Panel</h3>
+                    <div class="status available">Available</div>
+                    <p>Elite memory-based features with advanced radar and tracking.</p>
+                </a>
+                
+                <a href="emulator-bypass.html" class="card hidden" style="transition-delay: 300ms;">
+                    <h3>Emulator Bypass</h3>
+                    <div class="status available">Available</div>
+                    <p>Safely bypass emulator detection and match with mobile players.</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="buy-section hidden">
+            <div class="buy-text">Ready to Dominate?</div>
+            <a href="contact.html" class="premium-btn">To Buy Contact Us</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top"><span>Privacy Policy</span><span>Dev: Sahim</span></div>
+        <p class="footer-text">We respect your privacy. Your data will never be shared or sold. Transactions and communication are secured. <br> We do not leak our trading; everything is private and secured.</p>
+        <p class="copyright">© 2025 UMAR XITERS. All rights reserved. | <a href="#">Terms & Conditions</a> | Developed and Built by <span style="color:#2d8cf0">Sahim</span></p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            const overlay = document.querySelector('.transition-overlay');
+            setTimeout(() => { overlay.classList.add('slide-away'); }, 300);
+        });
+
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                const isSpecialLink = targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:') || targetUrl.includes('wa.me');
+                const isInternal = (targetUrl.includes('.html') || targetUrl === '#') && !targetUrl.includes('http') && !isSpecialLink;
+                
+                if (isInternal && targetUrl !== '#') {
+                    e.preventDefault();
+                    const overlay = document.querySelector('.transition-overlay');
+                    overlay.classList.remove('slide-away');
+                    setTimeout(() => { window.location.href = targetUrl; }, 800);
+                }
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('show'); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
