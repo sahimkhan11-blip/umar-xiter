@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Problems | UMAR XITERS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #050505; color: white; text-align: center; overflow-x: hidden; line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(45, 140, 240, 0.1) 0%, transparent 55%),
+                radial-gradient(circle at 75% 75%, rgba(45, 140, 240, 0.1) 0%, transparent 55%);
+            background-size: 50px 50px; background-attachment: fixed;
+        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, #2d8cf0, #128c7e); 
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(45, 140, 240, 0.5);
+        }
+
+        /* --- ANIMATED BACKGROUND PARTICLES --- */
+        .particles { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -1; pointer-events: none;
+        }
+        .particle { 
+            position: absolute; background: rgba(45, 140, 240, 0.1); 
+            border-radius: 50%; animation: float 20s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- OVERLAY --- */
+        .transition-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(135deg, #050505 0%, #0a0a1a 100%); 
+            z-index: 99999; display: flex; justify-content: center; align-items: center; 
+            transform: translateY(0); transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); 
+        }
+        .transition-overlay.slide-away { transform: translateY(-100%); }
+        .overlay-text { 
+            font-size: 30px; font-weight: 800; text-transform: uppercase; 
+            letter-spacing: 5px; color: white; position: relative;
+        }
+        .overlay-text span { 
+            color: #2d8cf0; animation: typing 3s steps(30, end) infinite, 
+                blink 0.5s step-end infinite alternate;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #2d8cf0;
+        }
+        @keyframes typing {
+            0% { width: 0 }
+            50% { width: 100% }
+            100% { width: 0 }
+        }
+        @keyframes blink { 50% { border-color: transparent } }
+
+        /* --- NAV --- */
+        nav { 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 20px 30px; gap: 30px; position: fixed; top: 20px; 
+            left: 50%; transform: translateX(-50%); z-index: 1000; 
+            background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            width: 90%; max-width: 500px; 
+            animation: navSlideIn 1s ease-out;
+        }
+        @keyframes navSlideIn {
+            from { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        nav a { 
+            color: #ccc; text-decoration: none; font-weight: 600; font-size: 14px; 
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; 
+            position: relative; padding: 5px 0;
+        }
+        nav a:hover { color: #fff; text-shadow: 0 0 10px #2d8cf0; }
+        nav a.active { color: #2d8cf0; text-shadow: 0 0 15px #2d8cf0; }
+        nav a.active::after { 
+            content: ''; position: absolute; width: 100%; height: 2px; 
+            bottom: -5px; left: 0; background: #2d8cf0; 
+            box-shadow: 0 0 10px #2d8cf0; animation: pulseLine 2s infinite;
+        }
+        @keyframes pulseLine {
+            0%, 100% { transform: scaleX(1); opacity: 1; }
+            50% { transform: scaleX(1.2); opacity: 0.8; }
+        }
+
+        /* --- CONTAINER --- */
+        .detail-container { 
+            max-width: 1100px; margin: 140px auto 60px auto; padding: 40px 20px; 
+            text-align: center; position: relative;
+        }
+        .detail-title { 
+            font-size: 45px; font-weight: 800; color: #fff; margin-bottom: 40px; 
+            text-transform: uppercase; position: relative;
+            animation: titleGlow 3s infinite alternate;
+        }
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 10px rgba(45, 140, 240, 0.5); }
+            to { text-shadow: 0 0 20px rgba(45, 140, 240, 0.8), 0 0 30px rgba(45, 140, 240, 0.4); }
+        }
+        .detail-title span { 
+            color: #2d8cf0; 
+            background: linear-gradient(90deg, #2d8cf0, #25D366, #2d8cf0);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s linear infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- PROBLEMS GRID --- */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .problem-box {
+            background: linear-gradient(145deg, rgba(20, 20, 25, 0.8), rgba(10, 10, 15, 0.8));
+            border: 1px solid transparent;
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .problem-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #2d8cf0, #25D366, #5865F2, #2d8cf0);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: 22px;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            animation: borderRotate 10s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; transform: rotate(0deg); }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; transform: rotate(360deg); }
+        }
+
+        .problem-box:hover::before {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .problem-box:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(45, 140, 240, 0.3);
+        }
+
+        .problem-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #2d8cf0;
+            filter: drop-shadow(0 0 10px rgba(45, 140, 240, 0.5));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .problem-title {
+            font-size: 20px; 
+            color: #fff; 
+            font-weight: 700; 
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .problem-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: #2d8cf0;
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .problem-box:hover .problem-title::after {
+            width: 80px;
+        }
+
+        .problem-desc {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            transition: color 0.3s;
+        }
+
+        .problem-box:hover .problem-desc {
+            color: #ddd;
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 20px;
+        }
+        .modal-overlay.active { 
+            opacity: 1; pointer-events: all; 
+            animation: modalFadeIn 0.5s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { backdrop-filter: blur(0); }
+            to { backdrop-filter: blur(15px); }
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
+            border: 1px solid rgba(45, 140, 240, 0.3);
+            width: 90%; max-width: 850px; padding: 40px; border-radius: 25px;
+            position: relative; transform: scale(0.8) translateY(50px); 
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 0 50px rgba(45, 140, 240, 0.3),
+                inset 0 0 20px rgba(45, 140, 240, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            opacity: 0;
+        }
+        .modal-overlay.active .modal-content { 
+            transform: scale(1) translateY(0); 
+            opacity: 1;
+            animation: modalContentPop 0.5s 0.1s both;
+        }
+        
+        @keyframes modalContentPop {
+            0% { transform: scale(0.8) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        
+        .close-modal {
+            position: absolute; top: 20px; right: 25px; font-size: 30px;
+            color: #aaa; cursor: pointer; transition: 0.3s;
+            z-index: 10;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .close-modal:hover { 
+            color: #ff3333; 
+            transform: rotate(90deg) scale(1.1);
+            background: rgba(255, 51, 51, 0.1);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
+        }
+        
+        .modal-title { 
+            font-size: 28px; 
+            color: white; 
+            margin-bottom: 30px; 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .modal-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #2d8cf0, transparent);
+            border-radius: 3px;
+        }
+        .modal-title span { 
+            color: #2d8cf0; 
+            text-shadow: 0 0 15px rgba(45, 140, 240, 0.5);
+        }
+
+        /* Modal Content Styles */
+        .modal-body {
+            text-align: left;
+            color: #ddd;
+            line-height: 1.6;
+        }
+
+        .solution-step {
+            background: linear-gradient(145deg, rgba(45, 140, 240, 0.1), rgba(37, 211, 102, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2d8cf0;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            animation: slideInRight 0.5s both;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .solution-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .solution-step h3 {
+            color: #2d8cf0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .solution-step h3 i {
+            font-size: 22px;
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .solution-step p {
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .solution-step ol, .solution-step ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .solution-step li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .solution-step li::before {
+            content: '▶';
+            position: absolute;
+            left: -15px;
+            color: #2d8cf0;
+            font-size: 12px;
+        }
+
+        /* Image in Modal */
+        .modal-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .modal-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(45, 140, 240, 0.3);
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(45, 140, 240, 0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366 0%, #128c7e 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #128c7e 0%, #25D366 100%);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .download-btn i {
+            font-size: 18px;
+            animation: downloadIcon 2s infinite;
+        }
+
+        @keyframes downloadIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        /* Action Buttons Container */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        /* Animation for problem boxes */
+        .hidden { 
+            opacity: 0; 
+            transform: translateY(40px) scale(0.9); 
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .show { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
+
+        /* Floating animation for boxes */
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .problem-box.show {
+            animation: floatBox 6s ease-in-out infinite;
+            animation-delay: calc(var(--box-index) * 0.2s);
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 60px;
+            padding: 20px;
+            color: #888;
+            font-size: 14px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) { 
+            .problems-grid { grid-template-columns: 1fr; } 
+            .modal-content { padding: 25px; }
+            .action-buttons { flex-direction: column; }
+            .detail-title { font-size: 35px; }
+            .problem-box { min-height: 180px; padding: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            nav { padding: 15px 20px; gap: 20px; }
+            .detail-title { font-size: 28px; }
+            .modal-content { padding: 20px; }
+            .solution-step { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="transition-overlay">
+        <div class="overlay-text">
+            <span>FIX PROBLEMS</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="fixproblem.html" class="active">Fix Problems</a>
+    </nav>
+
+    <main class="detail-container">
+        <h1 class="detail-title hidden">Fix <span>Problems</span></h1>
+
+        <div class="problems-grid">
+            
+            <!-- Problem 1 -->
+            <div class="problem-box hidden" data-problem="1" style="--box-index: 1">
+                <div class="problem-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="problem-title">FIX ERROR DLL AND DRIVER</div>
+                <div class="problem-desc">Click for solution and download</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-box hidden" data-problem="2" style="--box-index: 2">
+                <div class="problem-icon"><i class="fas fa-cogs"></i></div>
+                <div class="problem-title">C++ ERROR FIX D3DCompiler_43</div>
+                <div class="problem-desc">Fix C++ runtime error</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-box hidden" data-problem="3" style="--box-index: 3">
+                <div class="problem-icon"><i class="fas fa-gamepad"></i></div>
+                <div class="problem-title">32 BIT CHAMS MENU FIX</div>
+                <div class="problem-desc">Graphics settings solution</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="problem-box hidden" data-problem="4" style="--box-index: 4">
+                <div class="problem-icon"><i class="fas fa-bolt"></i></div>
+                <div class="problem-title">Resolve Hyper-V Issues</div>
+                <div class="problem-desc">Virtualization problem fix</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+            <!-- Problem 5 -->
+            <div class="problem-box hidden" data-problem="5" style="--box-index: 5">
+                <div class="problem-icon"><i class="fas fa-desktop"></i></div>
+                <div class="problem-title">Resolve .NET Framework Issues</div>
+                <div class="problem-desc">Framework installation guide</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+            <!-- Problem 6 -->
+            <div class="problem-box hidden" data-problem="6" style="--box-index: 6">
+                <div class="problem-icon"><i class="fas fa-ban"></i></div>
+                <div class="problem-title">NOUGAT 32-BIT INSTANCE ERROR</div>
+                <div class="problem-desc">System compatibility fix</div>
+                <div class="problem-hover-text">View Solution →</div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <p><i class="fas fa-info-circle"></i> Click on any problem card to view detailed solution</p>
+        </div>
+
+    </main>
+
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="problemModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></span>
+            <h2 class="modal-title" id="modalProblemTitle"></h2>
+            
+            <div class="modal-body" id="modalProblemContent">
+                <!-- Content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CREATE ANIMATED PARTICLES ---
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // --- PAGE TRANSITION ---
+        window.addEventListener('load', () => {
+            const overlay = document.querySelector('.transition-overlay');
+            setTimeout(() => { overlay.classList.add('slide-away'); }, 300);
+            createParticles();
+        });
+
+        // --- NAVIGATION TRANSITION ---
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                // Only do transition for internal HTML pages
+                if (targetUrl.includes('.html') && !targetUrl.includes('http')) {
+                    e.preventDefault();
+                    const overlay = document.querySelector('.transition-overlay');
+                    overlay.classList.remove('slide-away');
+                    setTimeout(() => { window.location.href = targetUrl; }, 800);
+                }
+            });
+        });
+
+        // --- ANIMATION OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add delay based on index for staggered animation
+                    setTimeout(() => {
+                        entry.target.classList.add('show');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+
+        // --- PROBLEM DATA ---
+        const problems = {
+            1: {
+                title: "FIX ERROR DLL AND DRIVER",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.1s">
+                        <h3><i class="fas fa-download"></i> Solution Steps:</h3>
+                        <p>Download and install the requirement. Your issue will be fixed.</p>
+                        <p>This package contains all necessary DLL files and drivers required for the panel to work properly.</p>
+                        <div class="action-buttons">
+                            <a href="https://cdn.discordapp.com/attachments/1270969746019582044/1443248340954386527/Panel_Requirements.zip?ex=695dc602&is=695c7482&hm=81fcdb6290c27718c39afda996938a0bb77f23c0140d84c7e7c528ddba910402&" 
+                               download="Panel_Requirements.zip"
+                               class="download-btn">
+                               <i class="fas fa-download"></i> Download Requirements
+                            </a>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                title: "C++ ERROR FIX D3DCompiler_43",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.2s">
+                        <h3><i class="fas fa-code"></i> Solution Steps:</h3>
+                        <p>Download and install the file. Your issue will be fixed.</p>
+                        <p>This is a missing Direct3D compiler file required for graphics rendering.</p>
+                        <img src="rahulmark.png" alt="C++ Error Fix" class="modal-image">
+                        <div class="action-buttons">
+                            <a href="https://www.mediafire.com/file/5uq1njl2e3r7fh1/d3dcompiler_43_x86-64.zip/file" 
+                               target="_blank"
+                               class="download-btn">
+                               <i class="fas fa-download"></i> Download D3DCompiler_43
+                            </a>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "32 BIT CHAMS MENU FIX",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.3s">
+                        <h3><i class="fas fa-sliders-h"></i> Solution Steps:</h3>
+                        <ol>
+                            <li>First click Emulator Setting</li>
+                            <li>Then click Graphics Setting</li>
+                            <li>Set Performance Mode</li>
+                            <li>Select OpenGL</li>
+                            <li>Apply and restart emulator</li>
+                        </ol>
+                        <p>This will fix your CHAMS menu error in 32-bit emulators.</p>
+                        <img src="graphich.png" alt="Graphics Settings" class="modal-image">
+                    </div>
+                `
+            },
+            4: {
+                title: "Resolve Hyper-V Issues",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.4s">
+                        <h3><i class="fas fa-video"></i> Solution Steps:</h3>
+                        <p>Hyper-V conflicts with Android emulators. Watch the video tutorial to solve it.</p>
+                        <img src="Screenshot_1.png" alt="Hyper-V Issue" class="modal-image">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/jZy2KX3hi2E" allowfullscreen></iframe>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="https://www.youtube.com/watch?v=jZy2KX3hi2E" target="_blank" class="download-btn">
+                                <i class="fab fa-youtube"></i> Watch on YouTube
+                            </a>
+                        </div>
+                    </div>
+                `
+            },
+            5: {
+                title: "Resolve .NET Framework Issues",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.5s">
+                        <h3><i class="fas fa-film"></i> Solution Steps:</h3>
+                        <p>.NET Framework is required for many Windows applications. Watch the video to install it.</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/LDHvqSwLcwI" allowfullscreen></iframe>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="https://www.youtube.com/watch?v=LDHvqSwLcwI" target="_blank" class="download-btn">
+                                <i class="fab fa-youtube"></i> Watch on YouTube
+                            </a>
+                        </div>
+                    </div>
+                `
+            },
+            6: {
+                title: "NOUGAT 32-BIT INSTANCE IS NOT SUPPORTED",
+                content: `
+                    <div class="solution-step" style="animation-delay: 0.6s">
+                        <h3><i class="fas fa-tools"></i> Solution Steps:</h3>
+                        <p>This error occurs when your system doesn't support 32-bit Android instances. Download and run the fix tool.</p>
+                        <img src="image_2.png" alt="Nougat Error" class="modal-image">
+                        <div class="action-buttons">
+                            <a href="https://cdn.discordapp.com/attachments/1270969746019582044/1376471442404671508/HD-DisableHyperV_native_v2.exe?ex=695e13ed&is=695cc26d&hm=d3de00e68a006c9400fea324ffe449fdaacc7511e9b2039594e07727bba75111&" 
+                               download="HD-DisableHyperV_native_v2.exe"
+                               class="download-btn">
+                               <i class="fas fa-download"></i> Download Fix Tool
+                            </a>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('problemModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modalProblemTitle');
+        const modalContent = document.getElementById('modalProblemContent');
+
+        // Open modal when problem box is clicked
+        document.querySelectorAll('.problem-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const problemId = this.getAttribute('data-problem');
+                const problem = problems[problemId];
+                
+                if (problem) {
+                    modalTitle.textContent = problem.title;
+                    modalContent.innerHTML = problem.content;
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Add animation to modal content
+                    const solutionSteps = modalContent.querySelectorAll('.solution-step');
+                    solutionSteps.forEach((step, index) => {
+                        step.style.animationDelay = `${index * 0.1}s`;
+                    });
+                }
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+            }, 400);
+        });
+
+        // Close when clicking outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    document.body.style.overflow = 'auto';
+                }, 400);
+            }
+        });
+
+        // Close with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    document.body.style.overflow = 'auto';
+                }, 400);
+            }
+        });
+
+        // Add hover effect to problem boxes
+        document.querySelectorAll('.problem-box').forEach(box => {
+            const hoverText = document.createElement('div');
+            hoverText.className = 'problem-hover-text';
+            hoverText.textContent = 'View Solution →';
+            hoverText.style.cssText = `
+                position: absolute;
+                bottom: 15px;
+                left: 0;
+                right: 0;
+                color: #2d8cf0;
+                font-weight: 600;
+                font-size: 12px;
+                opacity: 0;
+                transform: translateY(10px);
+                transition: all 0.3s;
+            `;
+            box.appendChild(hoverText);
+            
+            box.addEventListener('mouseenter', () => {
+                hoverText.style.opacity = '1';
+                hoverText.style.transform = 'translateY(0)';
+            });
+            
+            box.addEventListener('mouseleave', () => {
+                hoverText.style.opacity = '0';
+                hoverText.style.transform = 'translateY(10px)';
+            });
+        });
+    </script>
+</body>
+</html>
