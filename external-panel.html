@@ -67,43 +67,46 @@
         .feature-list li { margin-bottom: 8px; font-size: 15px; color: #ddd; display: flex; align-items: center; }
         .feature-list li::before { content: '●'; color: #2d8cf0; margin-right: 10px; font-size: 10px; }
 
-        /* IMAGE CONTAINER - SMALL AND HIGH QUALITY */
+        /* IMAGE CONTAINER - SIMILAR TO ACTUAL IMAGE */
         .image-container {
             margin: 60px auto 40px auto;
-            max-width: 600px; /* Reduced from 800px */
+            max-width: 900px; /* Increased to match image size */
             text-align: center;
             position: relative;
             overflow: hidden;
             border-radius: 15px;
-            border: 1px solid rgba(45, 140, 240, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            background: rgba(10, 10, 15, 0.7);
-            padding: 15px;
+            border: 2px solid rgba(45, 140, 240, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            background: rgba(10, 10, 15, 0.9);
+            padding: 20px;
         }
 
         .image-container img {
             width: 100%;
             height: auto;
-            max-height: 400px; /* Limit height for better view */
+            max-height: 550px; /* Increased height */
             object-fit: contain; /* Maintain aspect ratio */
             border-radius: 10px;
             display: block;
             transition: transform 0.5s ease;
             image-rendering: -webkit-optimize-contrast; /* Better quality */
             image-rendering: crisp-edges; /* Better quality */
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .image-container:hover img {
-            transform: scale(1.03);
+            transform: scale(1.01);
+            box-shadow: 0 0 20px rgba(45, 140, 240, 0.2);
         }
 
         .image-caption {
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 15px;
+            font-size: 16px;
             color: #2d8cf0;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(45, 140, 240, 0.3);
         }
 
         /* PRICING TABLE STYLE */
@@ -117,8 +120,50 @@
         .notice-box { text-align: left; background: rgba(255, 50, 50, 0.1); border: 1px solid rgba(255, 50, 50, 0.3); padding: 25px; border-radius: 20px; margin-bottom: 40px; color: #ffcccc; font-size: 14px; line-height: 1.8; }
         .notice-title { color: #ff5555; font-weight: 800; font-size: 18px; margin-bottom: 10px; text-transform: uppercase; }
 
-        .action-btn { display: block; width: 100%; max-width: 400px; margin: 0 auto; text-align: center; background: black; color: white; padding: 20px; font-weight: 800; text-transform: uppercase; text-decoration: none; border-radius: 50px; border: 1px solid #2d8cf0; transition: 0.3s; cursor: pointer; font-size: 16px; }
-        .action-btn:hover { background: #2d8cf0; box-shadow: 0 0 30px rgba(45,140,240,0.5); transform: scale(1.02); }
+        .action-btn { 
+            display: block; 
+            width: 100%; 
+            max-width: 400px; 
+            margin: 15px auto; 
+            text-align: center; 
+            background: black; 
+            color: white; 
+            padding: 20px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            border: 1px solid #2d8cf0; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            font-size: 16px; 
+        }
+        
+        .action-btn:hover { 
+            background: #2d8cf0; 
+            box-shadow: 0 0 30px rgba(45,140,240,0.5); 
+            transform: scale(1.02); 
+        }
+        
+        /* Download Button Specific Style */
+        .download-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128c7e 100%);
+            border: 1px solid #25D366;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #128c7e 0%, #25D366 100%);
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
+        }
+        
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
 
         /* Animation */
         .hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
@@ -174,22 +219,36 @@
         .whatsapp-btn { background: #25D366; color: black; box-shadow: 0 0 15px rgba(37, 211, 102, 0.3); }
         .whatsapp-btn:hover { background: #128c7e; color: white; box-shadow: 0 0 25px rgba(37, 211, 102, 0.6); }
 
+        @media (max-width: 1024px) { 
+            .image-container { 
+                max-width: 95%;
+                padding: 15px;
+                margin: 50px auto 30px auto;
+            }
+            .image-container img {
+                max-height: 500px;
+            }
+        }
+        
         @media (max-width: 768px) { 
             .features-grid { grid-template-columns: 1fr; } 
             .modal-grid { grid-template-columns: 1fr; }
             .image-container { 
-                max-width: 90%;
-                padding: 10px;
-                margin: 40px auto 30px auto;
+                max-width: 95%;
+                padding: 12px;
+                margin: 40px auto 25px auto;
             }
             .image-container img {
-                max-height: 300px;
+                max-height: 400px;
             }
         }
         @media (max-width: 600px) { 
             .pricing-table th, .pricing-table td { padding: 8px 5px; font-size: 13px; } 
             .image-container img {
-                max-height: 250px;
+                max-height: 350px;
+            }
+            .image-caption {
+                font-size: 14px;
             }
         }
     </style>
@@ -259,10 +318,10 @@
 
         </div>
 
-        <!-- IMAGE ADDED HERE - SMALL AND HIGH QUALITY -->
+        <!-- IMAGE CONTAINER - MATCHING ACTUAL IMAGE SIZE -->
         <div class="image-container hidden" style="transition-delay: 400ms;">
             <img src="external.png" alt="External Panel Interface">
-            <div class="image-caption">External Panel Interface Preview</div>
+            <div class="image-caption">EXTERNAL-PANEL INTERFACE PREVIEW</div>
         </div>
 
         <div class="pricing-box hidden" style="transition-delay: 500ms;">
@@ -313,7 +372,15 @@
             <p>● THANKYOU !</p>
         </div>
 
-        <button id="openPopupBtn" class="action-btn hidden" style="transition-delay: 700ms;">Purchase Now</button>
+        <!-- Button Container -->
+        <div class="button-container">
+            <button id="openPopupBtn" class="action-btn hidden" style="transition-delay: 700ms;">Purchase Now</button>
+            <a href="https://cdn.discordapp.com/attachments/1426830008353034370/1457621580505939998/EXE.rar?ex=695d5422&is=695c02a2&hm=4e427a4bd730674ebce9d438874bfc14b32c285ed57bfceb9bc3bdd93b5c58ab&" 
+               download="UMAR_XITERS_External_Panel.exe"
+               class="action-btn download-btn hidden" style="transition-delay: 750ms;">
+                Download Now
+            </a>
+        </div>
     </main>
 
     <!-- MODAL POPUP -->
