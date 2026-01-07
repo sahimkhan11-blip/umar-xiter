@@ -32,6 +32,45 @@
         .overlay-text span { color: #2d8cf0; }
         @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 20px rgba(45,140,240,0.8); } }
 
+        /* --- CLICK TO PLAY BUTTON (Small in bottom right) --- */
+        .click-music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2d8cf0, #00d2ff);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9998;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(45, 140, 240, 0.4);
+            transition: all 0.3s ease;
+            animation: pulseBtn 2s infinite;
+        }
+        
+        .click-music-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(45, 140, 240, 0.6);
+        }
+        
+        .click-music-btn i {
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        @keyframes pulseBtn {
+            0%, 100% { box-shadow: 0 5px 20px rgba(45, 140, 240, 0.4); }
+            50% { box-shadow: 0 5px 25px rgba(45, 140, 240, 0.8); }
+        }
+
         /* --- ANIMATIONS --- */
         .hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
         .show { opacity: 1; transform: translateY(0); }
@@ -172,239 +211,6 @@
             background: rgba(45, 140, 240, 0.2); 
         }
 
-        /* --- MUSIC PLAYER SECTION --- */
-        .music-section {
-            margin: 80px auto 40px;
-            max-width: 600px;
-            padding: 0 20px;
-        }
-
-        .music-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .music-title span {
-            color: #2d8cf0;
-            text-shadow: 0 0 15px rgba(45, 140, 240, 0.5);
-        }
-
-        .music-title::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -10px;
-            left: 0;
-            background: linear-gradient(90deg, transparent, #2d8cf0, transparent);
-        }
-
-        .music-player-container {
-            margin-top: 40px;
-        }
-
-        .music-card {
-            background: rgba(20, 20, 25, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .music-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(45, 140, 240, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(45, 140, 240, 0.2);
-        }
-
-        .song-cover {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 2px solid rgba(45, 140, 240, 0.3);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.4s;
-        }
-
-        .music-card:hover .song-cover {
-            transform: scale(1.05);
-        }
-
-        .song-info {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .song-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .song-artist {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .song-genre {
-            font-size: 14px;
-            color: #2d8cf0;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(45, 140, 240, 0.1);
-            padding: 6px 15px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        /* Audio Player Styles */
-        .audio-player {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .progress-container {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #2d8cf0, #25D366);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2d8cf0, #25D366);
-            border: none;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(45, 140, 240, 0.3);
-        }
-
-        .play-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(45, 140, 240, 0.5);
-        }
-
-        .play-btn.playing {
-            background: linear-gradient(135deg, #ff3333, #ff9900);
-        }
-
-        .control-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .control-btn:hover {
-            background: rgba(45, 140, 240, 0.3);
-            border-color: #2d8cf0;
-            transform: scale(1.1);
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .volume-slider {
-            flex-grow: 1;
-            height: 4px;
-            -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #2d8cf0;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(45, 140, 240, 0.5);
-        }
-
-        .volume-icon {
-            color: #2d8cf0;
-            font-size: 16px;
-            min-width: 20px;
-        }
-
-        /* Audio element hidden */
-        .audio-element {
-            display: none;
-        }
-
         /* --- FOOTER --- */
         footer { 
             margin-top: 50px; 
@@ -467,14 +273,24 @@
             .hero h1 { font-size: 40px; } 
             .services-title { font-size: 32px; } 
             nav { width: 95%; padding: 15px; } 
-            .music-title { font-size: 26px; }
-            .song-cover { width: 180px; height: 180px; }
+            .click-music-btn {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 20px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="transition-overlay"><div class="overlay-text">Loading <span>...</span></div></div>
+
+    <!-- Small Click to Play Button (Bottom Right) -->
+    <button class="click-music-btn" id="clickMusicBtn">
+        <i class="fas fa-play"></i>
+        Click to Play Music
+    </button>
 
     <header>
         <nav>
@@ -543,57 +359,6 @@
             <a href="contact.html" class="premium-btn">To Buy Contact Us</a>
         </section>
 
-        <!-- Music Player Section - Only NO BATADAO -->
-        <section class="music-section hidden">
-            <h2 class="music-title">PHONK <span>MUSIC</span></h2>
-            <p style="color: #aaa; margin-bottom: 30px; font-size: 15px;">Listen to NO BATADAO phonk track while gaming</p>
-            
-            <div class="music-player-container">
-                <div class="music-card">
-                    <img src="song1.jpg" alt="NO BATADAO" class="song-cover" onerror="this.src='https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'">
-                    <div class="song-info">
-                        <div class="song-title">NO BATADAO</div>
-                        <div class="song-artist">Slowed + Reverb Phonk</div>
-                        <div class="song-genre">Drift Phonk</div>
-                    </div>
-                    
-                    <div class="audio-player">
-                        <div class="progress-container">
-                            <div class="progress-bar" id="progressBar">
-                                <div class="progress" id="progress"></div>
-                            </div>
-                            <div class="time-display">
-                                <span id="currentTime">0:00</span>
-                                <span id="duration">0:00</span>
-                            </div>
-                        </div>
-                        
-                        <div class="player-controls">
-                            <button class="control-btn" id="prevBtn">
-                                <i class="fas fa-step-backward"></i>
-                            </button>
-                            <button class="play-btn" id="playBtn">
-                                <i class="fas fa-play"></i>
-                            </button>
-                            <button class="control-btn" id="nextBtn">
-                                <i class="fas fa-step-forward"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="volume-control">
-                            <i class="fas fa-volume-up volume-icon"></i>
-                            <input type="range" min="0" max="100" value="80" class="volume-slider" id="volume">
-                        </div>
-                    </div>
-                    
-                    <audio class="audio-element" id="audio" preload="metadata">
-                        <!-- Replace this source with your actual MP3 file -->
-                        <source src="NO_BATADAO.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer>
@@ -602,12 +367,86 @@
         <p class="copyright">© 2025 UMAR XITERS. All rights reserved. | <a href="#">Terms & Conditions</a> | Developed and Built by <span style="color:#2d8cf0">Sahim</span></p>
     </footer>
 
+    <!-- Hidden Audio -->
+    <audio id="backgroundMusic" loop>
+        <source src="NO_BATADAO.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
+        // Variables
+        let audio = document.getElementById('backgroundMusic');
+        let clickBtn = document.getElementById('clickMusicBtn');
+        let musicStarted = false;
+        
+        // Set audio volume
+        audio.volume = 0.7; // 70% volume
+        
+        // Page load animation
         window.addEventListener('load', () => {
             const overlay = document.querySelector('.transition-overlay');
-            setTimeout(() => { overlay.classList.add('slide-away'); }, 300);
+            setTimeout(() => { 
+                overlay.classList.add('slide-away'); 
+                
+                // Show click button after 1 second
+                setTimeout(() => {
+                    clickBtn.style.display = 'flex';
+                }, 1000);
+            }, 300);
         });
-
+        
+        // Function to start music
+        function startMusic() {
+            if (!musicStarted) {
+                audio.play().then(() => {
+                    console.log("Music started successfully");
+                    musicStarted = true;
+                    
+                    // Change button to "Playing" state
+                    clickBtn.innerHTML = '<i class="fas fa-volume-up"></i> Music Playing';
+                    clickBtn.style.background = 'linear-gradient(135deg, #00ff88, #00d2ff)';
+                    clickBtn.style.animation = 'none';
+                    
+                    // Hide button after 3 seconds
+                    setTimeout(() => {
+                        clickBtn.style.opacity = '0.7';
+                        clickBtn.style.transform = 'scale(0.95)';
+                    }, 2000);
+                }).catch(error => {
+                    console.log("Error playing music:", error);
+                    
+                    // Show error state
+                    clickBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Click Again';
+                    clickBtn.style.background = 'linear-gradient(135deg, #ff3333, #ff9900)';
+                });
+            }
+        }
+        
+        // Click button to play music
+        clickBtn.addEventListener('click', startMusic);
+        
+        // Also allow clicking anywhere on the page (except links/buttons)
+        document.addEventListener('click', function(event) {
+            // Don't start music if clicking on links, buttons, or the music button itself
+            if (event.target.tagName === 'A' || 
+                event.target.tagName === 'BUTTON' || 
+                event.target.closest('a') || 
+                event.target.closest('button') ||
+                event.target === clickBtn || 
+                event.target.closest('#clickMusicBtn')) {
+                return;
+            }
+            
+            startMusic();
+        });
+        
+        // Auto-restart when song ends (already handled by loop attribute)
+        audio.addEventListener('ended', function() {
+            // This will automatically restart because of loop="true"
+            console.log("Song ended, restarting...");
+        });
+        
+        // Navigation
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetUrl = this.getAttribute('href');
@@ -618,101 +457,37 @@
                     e.preventDefault();
                     const overlay = document.querySelector('.transition-overlay');
                     overlay.classList.remove('slide-away');
+                    
+                    // Pause music during page transition
+                    if (!audio.paused) {
+                        audio.pause();
+                    }
+                    
                     setTimeout(() => { window.location.href = targetUrl; }, 800);
                 }
             });
         });
-
+        
+        // Scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('show'); } });
         }, { threshold: 0.1 });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
-
-        // Music Player JavaScript - Only one song
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('playBtn');
-        const progress = document.getElementById('progress');
-        const progressBar = document.getElementById('progressBar');
-        const currentTime = document.getElementById('currentTime');
-        const duration = document.getElementById('duration');
-        const volume = document.getElementById('volume');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        // Set initial volume
-        audio.volume = volume.value / 100;
-
-        // Update duration when loaded
-        audio.addEventListener('loadedmetadata', () => {
-            duration.textContent = formatTime(audio.duration);
-        });
-
-        // Update progress bar
-        audio.addEventListener('timeupdate', () => {
-            const percent = (audio.currentTime / audio.duration) * 100;
-            progress.style.width = `${percent}%`;
-            currentTime.textContent = formatTime(audio.currentTime);
-        });
-
-        // Volume control
-        volume.addEventListener('input', () => {
-            audio.volume = volume.value / 100;
-        });
-
-        // Click progress bar to seek
-        progressBar.addEventListener('click', (e) => {
-            const rect = progressBar.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = percent * audio.duration;
-        });
-
-        // Play/pause button
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('playing');
-            } else {
-                audio.pause();
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                playBtn.classList.remove('playing');
+        
+        // Show button on hover when hidden
+        clickBtn.addEventListener('mouseenter', function() {
+            if (musicStarted) {
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1)';
             }
         });
-
-        // Previous button - restart song
-        prevBtn.addEventListener('click', () => {
-            audio.currentTime = 0;
-        });
-
-        // Next button - restart song (since only one song)
-        nextBtn.addEventListener('click', () => {
-            audio.currentTime = 0;
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('playing');
+        
+        clickBtn.addEventListener('mouseleave', function() {
+            if (musicStarted) {
+                this.style.opacity = '0.7';
+                this.style.transform = 'scale(0.95)';
             }
         });
-
-        // When song ends
-        audio.addEventListener('ended', () => {
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.classList.remove('playing');
-            progress.style.width = '0%';
-            currentTime.textContent = '0:00';
-            audio.currentTime = 0;
-        });
-
-        // Format time function
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-
-        // Auto-play when page loads (optional - you can remove this if you don't want autoplay)
-        // audio.play().catch(e => console.log("Autoplay prevented:", e));
     </script>
 </body>
 </html>
